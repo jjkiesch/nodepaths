@@ -11,8 +11,8 @@ angular.module('nodepathsApp')
     return {
       restrict: 'A',
       link: function postLink(scope, element) {
-        jsPlumb.addEndpoints(element, [{ isSource: true, anchor: 'BottomLeft' }, { isSource: true, anchor: 'BottomRight' }]);
         element.text(scope.paths.value);
+        jsPlumb.addEndpoints(element, [{ isSource: true, anchor: 'BottomLeft' }, { isSource: true, anchor: 'BottomRight' }]);
       }
     };
   });

@@ -23,6 +23,7 @@ angular.module('nodepathsApp')
       jsPlumb.addEndpoint(newNode, { isSource: true, anchor: 'BottomLeft'});
       jsPlumb.addEndpoint(newNode, { isSource: true, anchor: 'BottomRight'});
       $scope.nodesCount++;
+      $scope.$apply();
     };
 
     jsPlumb.bind('connection', function(info) {
@@ -47,17 +48,14 @@ angular.module('nodepathsApp')
 
     var findParentNode = function(key, paths) {
       var result = null;
-      if (paths instanceof Array) {
-        for (var i = 0; i < paths.length; i++) {
-          result = findParentNode(key, paths[i]);
+      for (var id in paths) {
+        if (paths.id === key) {
+          return paths;
         }
-      } else {
-        for (var id in paths) {
-          if (paths.id === key) {
-            return paths;
-          }
-          if (paths[id] instanceof Object || paths[id] instanceof Array) {
-            result = findParentNode(key, paths[id]);
+        if (paths[id] instanceof Object) {
+          result = findParentNode(key, paths[id]);
+          if (result) {
+            return result;
           }
         }
       }
